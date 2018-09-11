@@ -12,7 +12,7 @@ export interface StoredData {
   allowMix: boolean;
   barbellWeight: number;
   unit: Unit;
-  weightKg: number;
+  weightKg: number | null;
   platesKg: number[];
   platesLb: number[];
 }
@@ -36,7 +36,7 @@ export class WeightStore {
   static plateWeightsLb: number[] = [55, 45, 35, 25, 10, 5, 2.5, 1.25, 1, 0.75, 0.5, 0.25];
 
   @observable
-  _weightKg: number; // We don't want to show more than 2dp; use computed value instead
+  _weightKg: number | null; // We don't want to show more than 2dp; use computed value instead
 
   @observable
   allowMix: boolean = false;
@@ -64,9 +64,9 @@ export class WeightStore {
   }
 
   @computed
-  get weight(): number {
-    if (isNaN(this._weightKg) || this._weightKg === null || this._weightKg < 0) {
-      return 0;
+  get weight(): number | '' {
+    if (this._weightKg === null || isNaN(this._weightKg) || this._weightKg < 0) {
+      return '';
     }
     return this.isUsingMetric ? Math.round(this._weightKg * 10) / 10 : Math.round(toLb(this._weightKg));
   }
@@ -100,8 +100,9 @@ export class WeightStore {
 
   @computed
   get plateCountList(): PlateCountListItem[] {
-    let leftover = this.weight - (this.isUsingMetric ? this.barbellWeight : toLb(this.barbellWeight));
-    if (this.weight <= 0 || this.platesKg.size + this.platesLb.size === 0 || isNaN(leftover) || leftover <= 0) {
+    const selectedWeight = this._weightKg || 0;
+    let leftover = this.isUsingMetric ? selectedWeight - this.barbellWeight : toLb(selectedWeight - this.barbellWeight);
+    if (selectedWeight <= 0 || this.platesKg.size + this.platesLb.size === 0 || isNaN(leftover) || leftover <= 0) {
       return [];
     }
     const result: PlateCountListItem[] = [];
@@ -201,7 +202,7 @@ export class WeightStore {
   };
 
   @action
-  setWeight = (value: number) => {
+  setWeight = (value: number | null) => {
     this._weightKg = value;
   };
 

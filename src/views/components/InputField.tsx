@@ -4,23 +4,20 @@ import * as React from 'react';
 interface InputFieldProps extends TextFieldProps {
   className?: string;
   onChanged(value: any): void;
+  value: any;
 }
 
-export class InputField extends React.PureComponent<InputFieldProps, { value: Array<string | number | boolean> | string | number | boolean }> {
-  /**
-   * to handle empty string, the value is uncontrolled. When props.value changes, it will not change state.
-   */
-  state = {
-    value: this.props.defaultValue || this.props.value || '',
-  }
-
+export class InputField extends React.PureComponent<
+  InputFieldProps,
+  { displayValue: any; defaultValue: any; isDirty: boolean }
+> {
   render() {
-    const { className, onChanged, onKeyDown, value, defaultValue, ...textFieldProps } = this.props;
+    const { className, onChanged, onKeyDown, value, ...textFieldProps } = this.props;
 
     return (
       <TextField
         {...textFieldProps}
-        value={this.state.value}
+        value={value}
         className={className}
         onChange={this._onChange}
         onBlur={this._onBlur}
@@ -30,13 +27,13 @@ export class InputField extends React.PureComponent<InputFieldProps, { value: Ar
   }
 
   private _onChange = event => {
-    this.setState({
-      value: event.target.value,
-    });
+    const nextValue = event.target.value;
+    this.props.onChanged(nextValue);
   };
 
-  private _onBlur = () => {
-    this.props.onChanged(this.state.value);
+  private _onBlur = event => {
+    const nextValue = event.target.value;
+    this.props.onChanged(nextValue);
   };
 
   private _onKeyDown = event => {

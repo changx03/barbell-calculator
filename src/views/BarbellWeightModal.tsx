@@ -55,7 +55,7 @@ class BarbellWeightModalInner extends React.Component<BarbellWeightModalProps, {
   private _onBarbellInputChange = value => {
     const { setBarbellWeight } = this.props.weightStore as WeightStore;
     const valueF = parseFloat(value);
-    if (!isNaN(valueF)) {
+    if (!isNaN(valueF) && valueF >= 0) {
       setBarbellWeight(valueF);
     }
   };

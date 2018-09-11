@@ -2,7 +2,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { inject, observer,  } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { Stores } from '../App';
 import { AppStore, WeightStore } from '../stores';
@@ -54,11 +54,11 @@ class WeightRackingCalculatorInner extends React.Component<WeightRackingCalculat
 
   private _handleChange = value => {
     const { setWeight } = this.props.store as WeightStore;
-    const newWeight = parseFloat(value);
-    if (!isNaN(newWeight)) {
+    if (value === '') {
+      setWeight(null);
+    } else {
+      const newWeight = parseFloat(value);
       setWeight(newWeight);
-    } else if (value === '') {
-      setWeight(0);
     }
   };
 }

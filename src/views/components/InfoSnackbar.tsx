@@ -11,7 +11,7 @@ export interface InfoSnackbarProps extends WithStyles<typeof styles> {
 }
 
 function InfoSnackbarInner(props: InfoSnackbarProps) {
-  const { info, icon, message: msgClass } = props.classes;
+  const { info, icon, message: msgClass, closeIconButton } = props.classes;
   const { onClose, children } = props;
   return (
     <SnackbarContent
@@ -19,7 +19,7 @@ function InfoSnackbarInner(props: InfoSnackbarProps) {
       aria-describedby="client-snackbar"
       message={<span className={msgClass}>{children}</span>}
       action={[
-        <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
+        <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose} className={closeIconButton}>
           <CloseIcon className={icon} />
         </IconButton>,
       ]}
