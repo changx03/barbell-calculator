@@ -1,26 +1,31 @@
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 interface InputFieldProps extends TextFieldProps {
   className?: string;
   onChanged(value: any): void;
-  value: any;
+  store: any;
+  editKey: string;
 }
 
-export class InputField extends React.PureComponent<
-  InputFieldProps,
-  { displayValue: any; defaultValue: any; isDirty: boolean }
-> {
+function parseNumber(value: string): number | null {
+  return value === '' ? null : parseFloat(value);
+}
+
+@observer
+export class NumberInputField extends React.Component<InputFieldProps, {}> {
   render() {
-    const { className, onChanged, onKeyDown, value, ...textFieldProps } = this.props;
+    const { className, onChanged, onKeyDown, value, defaultValue, store, editKey, ...textFieldProps } = this.props;
+    const displayValue = store[editKey] || '';
 
     return (
       <TextField
         {...textFieldProps}
-        value={value}
+        value={displayValue}
         className={className}
         onChange={this._onChange}
-        onBlur={this._onBlur}
+        onBlur={this._onChange}
         onKeyDown={this._onKeyDown}
       />
     );
@@ -28,12 +33,8 @@ export class InputField extends React.PureComponent<
 
   private _onChange = event => {
     const nextValue = event.target.value;
-    this.props.onChanged(nextValue);
-  };
-
-  private _onBlur = event => {
-    const nextValue = event.target.value;
-    this.props.onChanged(nextValue);
+    const { onChanged } = this.props;
+    onChanged(parseNumber(nextValue));
   };
 
   private _onKeyDown = event => {

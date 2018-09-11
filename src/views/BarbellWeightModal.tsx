@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Stores } from '../App';
 import { AppStore, WeightStore } from '../stores';
 import { styles } from '../styles';
-import { ButtonRow, InputField } from './components';
+import { ButtonRow, NumberInputField } from './components';
 
 interface BarbellWeightModalProps extends WithStyles<typeof styles> {
   appStore?: AppStore;
@@ -23,16 +23,16 @@ class BarbellWeightModalInner extends React.Component<BarbellWeightModalProps, {
   render() {
     const { classes } = this.props;
     const { isBarbellWeightModalOpen } = this.props.appStore as AppStore;
-    const { barbellWeight } = this.props.weightStore as WeightStore;
     return (
       <Modal open={isBarbellWeightModalOpen} onClose={this._onClose}>
         <div className={classes.modal}>
           <Typography variant="title" className={classes.modalTitle}>
             Change barbell weight
           </Typography>
-          <InputField
+          <NumberInputField
             label="Barbell weight"
-            value={barbellWeight}
+            store={this.props.weightStore as WeightStore}
+            editKey="barbellWeight"
             onChanged={this._onBarbellInputChange}
             type="number"
             margin="normal"
@@ -54,10 +54,7 @@ class BarbellWeightModalInner extends React.Component<BarbellWeightModalProps, {
 
   private _onBarbellInputChange = value => {
     const { setBarbellWeight } = this.props.weightStore as WeightStore;
-    const valueF = parseFloat(value);
-    if (!isNaN(valueF) && valueF >= 0) {
-      setBarbellWeight(valueF);
-    }
+    setBarbellWeight(value);
   };
 }
 

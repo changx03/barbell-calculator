@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Stores } from '../App';
 import { AppStore, WeightStore } from '../stores';
 import { styles } from '../styles';
-import { InfoPanel, InputField, InputUnitAdornment, PlateList } from './components';
+import { InfoPanel, NumberInputField, InputUnitAdornment, PlateList } from './components';
 
 interface WeightRackingCalculatorProps extends WithStyles<typeof styles> {
   store?: WeightStore;
@@ -21,7 +21,7 @@ class WeightRackingCalculatorInner extends React.Component<WeightRackingCalculat
     const { classes } = this.props;
     const store = this.props.store as WeightStore;
     const { closeInfo } = this.props.appStore as AppStore;
-    const { weight } = store;
+
     return (
       <Card className={classes.root}>
         <CardContent>
@@ -29,9 +29,10 @@ class WeightRackingCalculatorInner extends React.Component<WeightRackingCalculat
             Barbell racking calculator
           </Typography>
           <InfoPanel store={this.props.appStore as AppStore} keyName="showInfo" onClose={closeInfo} />
-          <InputField
+          <NumberInputField
             label="Total weight"
-            value={weight}
+            store={store}
+            editKey="weight"
             onChanged={this._handleChange}
             type="number"
             className={classes.textField}
@@ -54,12 +55,7 @@ class WeightRackingCalculatorInner extends React.Component<WeightRackingCalculat
 
   private _handleChange = value => {
     const { setWeight } = this.props.store as WeightStore;
-    if (value === '') {
-      setWeight(null);
-    } else {
-      const newWeight = parseFloat(value);
-      setWeight(newWeight);
-    }
+    setWeight(value);
   };
 }
 
