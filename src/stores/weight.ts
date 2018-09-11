@@ -15,6 +15,7 @@ export interface StoredData {
   weightKg: number | null;
   platesKg: number[];
   platesLb: number[];
+  increment?: number;
 }
 
 export interface Plate {
@@ -52,6 +53,9 @@ export class WeightStore {
 
   @observable
   barbellWeight: number = 20;
+
+  @observable
+  increment: number = 2.5;
 
   constructor() {
     WeightStore.plateWeightsKg.forEach(i => {
@@ -209,5 +213,19 @@ export class WeightStore {
   @action
   setBarbellWeight = (value: number) => {
     this.barbellWeight = value;
+  };
+
+  @action
+  setIncrement = (value: number) => {
+    this.increment = value;
+  };
+
+  @action
+  applyIncrement = (isAdd: boolean) => {
+    const p = (this.increment !== null ? (isAdd ? this.increment : -this.increment) : 0) / 100 + 1;
+    const weight = this._weightKg !== null ? this._weightKg : 0;
+    // TODO: rounding seems to be an issue
+    // this._weightKg = weightRounding(weight * p, this.isUsingMetric);
+    (this._weightKg = weight * p), this.isUsingMetric;
   };
 }

@@ -36,6 +36,11 @@ export const InfoPanel = observer((props: InfoPanelProps) => {
         </li>
         <li>
           <Typography variant="body1" color="inherit">
+            The -/+ icons help you adjust weight based on percentage
+          </Typography>
+        </li>
+        <li>
+          <Typography variant="body1" color="inherit">
             Go to SETTINGS to select available plates and barbell weight.
           </Typography>
         </li>

@@ -49,4 +49,8 @@ export const styles: StyleRulesCallback = (theme: Theme) =>
       height: 28,
       width: 28,
     },
+    customInputGroup: {
+      margin: theme.spacing.unit,
+      marginTop: theme.spacing.unit * 2,
+    },
   });

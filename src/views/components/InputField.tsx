@@ -1,16 +1,13 @@
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
-import * as React from 'react';
 import { observer } from 'mobx-react';
+import * as React from 'react';
+import { parseNumber } from '../../stores';
 
 interface InputFieldProps extends TextFieldProps {
   className?: string;
   onChanged(value: any): void;
   store: any;
   editKey: string;
-}
-
-function parseNumber(value: string): number | null {
-  return value === '' ? null : parseFloat(value);
 }
 
 @observer

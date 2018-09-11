@@ -10,6 +10,9 @@ export class AppStore {
   @observable
   showInfo: boolean = true;
 
+  @observable
+  isIncrementModalOpen: boolean = false;
+
   @action
   setCurrentPage = (value: number) => {
     this.currentPageIndex = value;
@@ -23,5 +26,10 @@ export class AppStore {
   @action
   closeInfo = () => {
     this.showInfo = false;
+  };
+
+  @action
+  setIncrementModal = (isOpen: boolean) => {
+    this.isIncrementModalOpen = isOpen;
   };
 }

@@ -11,6 +11,7 @@ import { Unit, WeightStore } from '../stores/weight';
 import { styles } from '../styles';
 import { BarbellWeightModal } from './BarbellWeightModal';
 import { ButtonRow, WeightPlateSelectList, WeightSetupGeneral } from './components';
+import { IncrementModal } from './IncrementModal';
 
 interface WeightSetupPageProps extends WithStyles<typeof styles> {
   store?: WeightStore;
@@ -38,6 +39,7 @@ class WeightSetupPageInner extends React.Component<WeightSetupPageProps, {}> {
           </CardContent>
         </Card>
         <BarbellWeightModal />
+        <IncrementModal />
       </>
     );
   }

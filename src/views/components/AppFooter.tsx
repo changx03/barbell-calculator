@@ -7,7 +7,7 @@ export const AppFooter = () => (
     <Typography id="footer-info-copyright" variant="body1">
       Released under the <a href="https://github.com/mui-org/material-ui/blob/master/LICENSE/">MIT License</a>.
     </Typography>
-    <Typography id="footer-author" variant="body1">Developed by Luke Chang, 2018</Typography>
+    <Typography id="footer-author" variant="body1">Build with React by Luke, 2018</Typography>
     <a href="https://github.com/changx03/barbell-calculator" style={{ color: 'inherit' }}><GitHubIcon/></a>
   </div>
 );

@@ -9,6 +9,7 @@ import Switch from '@material-ui/core/Switch';
 import FitnessCenter from '@material-ui/icons/FitnessCenter';
 import Language from '@material-ui/icons/Language';
 import Repeat from '@material-ui/icons/Repeat';
+import TrendingUp from '@material-ui/icons/TrendingUp';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { Stores } from '../../App';
@@ -28,7 +29,10 @@ export class WeightSetupGeneral extends React.Component<
   {}
 > {
   render() {
-    const { allowMix, toggleAllowMix, toggleUnitSystem, barbellWeight, displayUnit } = this.props.store as WeightStore;
+    const { allowMix, toggleAllowMix, toggleUnitSystem, barbellWeight, displayUnit, increment } = this.props
+      .store as WeightStore;
+    const { setBarbellWeightModal, setIncrementModal } = this.props.appStore as AppStore;
+
     return (
       <Paper elevation={0}>
         <List>
@@ -54,7 +58,7 @@ export class WeightSetupGeneral extends React.Component<
           <ListItem
             button
             onClick={() => {
-              this.props.appStore && this.props.appStore.setBarbellWeightModal(true);
+              setBarbellWeightModal(true);
             }}
           >
             <ListItemIcon>
@@ -62,6 +66,18 @@ export class WeightSetupGeneral extends React.Component<
             </ListItemIcon>
             <ListItemText primary="Barbell weight" secondary="Barbell is measured in Kg" />
             <Typography variant="subheading">{barbellWeight}</Typography>
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              setIncrementModal(true);
+            }}
+          >
+            <ListItemIcon>
+              <TrendingUp />
+            </ListItemIcon>
+            <ListItemText primary="Increment (%)" secondary="Change percentage of weight when click -/+ icons" />
+            <Typography variant="subheading">{increment}</Typography>
           </ListItem>
         </List>
       </Paper>
