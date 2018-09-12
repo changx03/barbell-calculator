@@ -164,6 +164,7 @@ export class WeightStore {
       platesKg: avaliablePlatesKg,
       platesLb: avaliablePlatesLb,
       barbellWeight: this.barbellWeight,
+      increment: this.increment,
     };
     window.localStorage.setItem(APP_NAME, JSON.stringify(storeData));
   }
@@ -181,17 +182,22 @@ export class WeightStore {
   loadSetupFromStorage() {
     if (!!window.localStorage.getItem(APP_NAME)) {
       const storedData = JSON.parse(window.localStorage.getItem(APP_NAME) as string);
-      const { allowMix, platesKg, platesLb, unit, weightKg, barbellWeight } = storedData;
-      this._weightKg = weightKg;
-      this.allowMix = allowMix;
-      platesKg.forEach((i: number) => {
-        this.platesKg.set(i, true);
-      });
-      platesLb.forEach((i: number) => {
-        this.platesLb.set(i, true);
-      });
-      this.displayUnit = unit;
-      this.barbellWeight = barbellWeight;
+      const { allowMix, platesKg, platesLb, unit, weightKg, barbellWeight, increment } = storedData;
+      weightKg && (this._weightKg = weightKg);
+      allowMix && (this.allowMix = allowMix);
+      increment && (this.increment = increment);
+      if (platesKg) {
+        platesKg.forEach((i: number) => {
+          this.platesKg.set(i, true);
+        });
+      }
+      if (platesLb) {
+        platesLb.forEach((i: number) => {
+          this.platesLb.set(i, true);
+        });
+      }
+      unit && (this.displayUnit = unit);
+      barbellWeight && (this.barbellWeight = barbellWeight);
     }
   }
 

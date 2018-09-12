@@ -1,4 +1,3 @@
-import { Typography } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { AppStore } from '../../stores';
@@ -19,31 +18,12 @@ export const InfoPanel = observer((props: InfoPanelProps) => {
   return (
     <InfoSnackbar onClose={onClose}>
       <ul>
-        <li>
-          <Typography variant="body1" color="inherit">
-            Enter the weight, this calculator will show the plates you need.
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1" color="inherit">
-            You can mix two scales together by switching on "Allow mix" in SETTINGS.
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1" color="inherit">
-            You can convert between Kg and Lb in SETTINGS.
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1" color="inherit">
-            The -/+ icons help you adjust weight based on percentage
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1" color="inherit">
-            Go to SETTINGS to select available plates and barbell weight.
-          </Typography>
-        </li>
+        <li>Never underestimate the power of improving 1% every workout!</li>
+        <li>Enter the weight, this calculator will show the plates you need.</li>
+        <li>The -/+ icons help you adjust weight based on percentage</li>
+        <li>You can mix two scales together by switching on "Allow mix" in SETTINGS.</li>
+        <li>You can convert between Kg and Lb in SETTINGS.</li>
+        <li>Go to SETTINGS to select available plates and barbell weight.</li>
       </ul>
     </InfoSnackbar>
   );
